@@ -9,11 +9,21 @@
 /* Begin PBXBuildFile section */
 		9C13BA9E1A76246B00A38FFC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C13BA9D1A76246B00A38FFC /* main.m */; };
 		9C13BAA11A76246C00A38FFC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C13BAA01A76246C00A38FFC /* AppDelegate.m */; };
-		9C13BAA41A76246C00A38FFC /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C13BAA31A76246C00A38FFC /* ViewController.m */; };
-		9C13BAA71A76246D00A38FFC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C13BAA51A76246D00A38FFC /* Main.storyboard */; };
 		9C13BAA91A76246D00A38FFC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C13BAA81A76246D00A38FFC /* Images.xcassets */; };
 		9C13BAAC1A76246D00A38FFC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C13BAAA1A76246D00A38FFC /* LaunchScreen.xib */; };
 		9C13BAB81A76246E00A38FFC /* TicTacToeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C13BAB71A76246E00A38FFC /* TicTacToeTests.m */; };
+		9C13BAC31A76255900A38FFC /* O.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C13BAC21A76255900A38FFC /* O.png */; };
+		9C13BAC51A76257000A38FFC /* X.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C13BAC41A76257000A38FFC /* X.png */; };
+		9C13BAC71A76258F00A38FFC /* board.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C13BAC61A76258F00A38FFC /* board.png */; };
+		9C13BAC91A7625A400A38FFC /* wood_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C13BAC81A7625A400A38FFC /* wood_button.png */; };
+		9C13BACB1A7625BB00A38FFC /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C13BACA1A7625BB00A38FFC /* icon.png */; };
+		9C13BACE1A76264200A38FFC /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C13BACD1A76264200A38FFC /* GameKit.framework */; };
+		9C13BAD01A76264900A38FFC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C13BACF1A76264900A38FFC /* UIKit.framework */; };
+		9C13BAD21A76264E00A38FFC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C13BAD11A76264E00A38FFC /* Foundation.framework */; };
+		9C13BAE01A762CC900A38FFC /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C13BADE1A762CC900A38FFC /* ViewController.m */; };
+		9C13BAE11A762CC900A38FFC /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C13BADF1A762CC900A38FFC /* ViewController.xib */; };
+		9C13BAE41A76319F00A38FFC /* Packet.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C13BAE31A76319F00A38FFC /* Packet.m */; };
+		9C13BAE61A763CF300A38FFC /* MultipeerConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C13BAE51A763CF300A38FFC /* MultipeerConnectivity.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,14 +42,26 @@
 		9C13BA9D1A76246B00A38FFC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9C13BA9F1A76246C00A38FFC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9C13BAA01A76246C00A38FFC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		9C13BAA21A76246C00A38FFC /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		9C13BAA31A76246C00A38FFC /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		9C13BAA61A76246D00A38FFC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9C13BAA81A76246D00A38FFC /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		9C13BAAB1A76246D00A38FFC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		9C13BAB11A76246E00A38FFC /* TicTacToeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TicTacToeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C13BAB61A76246E00A38FFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9C13BAB71A76246E00A38FFC /* TicTacToeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TicTacToeTests.m; sourceTree = "<group>"; };
+		9C13BAC21A76255900A38FFC /* O.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = O.png; sourceTree = "<group>"; };
+		9C13BAC41A76257000A38FFC /* X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = X.png; sourceTree = "<group>"; };
+		9C13BAC61A76258F00A38FFC /* board.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = board.png; sourceTree = "<group>"; };
+		9C13BAC81A7625A400A38FFC /* wood_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wood_button.png; sourceTree = "<group>"; };
+		9C13BACA1A7625BB00A38FFC /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		9C13BACD1A76264200A38FFC /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		9C13BACF1A76264900A38FFC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		9C13BAD11A76264E00A38FFC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		9C13BAD41A76271600A38FFC /* TicTacToe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TicTacToe.h; sourceTree = "<group>"; };
+		9C13BADD1A762CC900A38FFC /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		9C13BADE1A762CC900A38FFC /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		9C13BADF1A762CC900A38FFC /* ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
+		9C13BAE21A76319F00A38FFC /* Packet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Packet.h; sourceTree = "<group>"; };
+		9C13BAE31A76319F00A38FFC /* Packet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Packet.m; sourceTree = "<group>"; };
+		9C13BAE51A763CF300A38FFC /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +69,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C13BAE61A763CF300A38FFC /* MultipeerConnectivity.framework in Frameworks */,
+				9C13BAD21A76264E00A38FFC /* Foundation.framework in Frameworks */,
+				9C13BAD01A76264900A38FFC /* UIKit.framework in Frameworks */,
+				9C13BACE1A76264200A38FFC /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				9C13BA9A1A76246B00A38FFC /* TicTacToe */,
+				9C13BAD31A76265200A38FFC /* Frameworks */,
 				9C13BAB41A76246E00A38FFC /* TicTacToeTests */,
 				9C13BA991A76246B00A38FFC /* Products */,
 			);
@@ -81,14 +108,17 @@
 		9C13BA9A1A76246B00A38FFC /* TicTacToe */ = {
 			isa = PBXGroup;
 			children = (
+				9C13BAD41A76271600A38FFC /* TicTacToe.h */,
+				9C13BAE21A76319F00A38FFC /* Packet.h */,
+				9C13BAE31A76319F00A38FFC /* Packet.m */,
+				9C13BA9B1A76246B00A38FFC /* Supporting Files */,
 				9C13BA9F1A76246C00A38FFC /* AppDelegate.h */,
 				9C13BAA01A76246C00A38FFC /* AppDelegate.m */,
-				9C13BAA21A76246C00A38FFC /* ViewController.h */,
-				9C13BAA31A76246C00A38FFC /* ViewController.m */,
-				9C13BAA51A76246D00A38FFC /* Main.storyboard */,
+				9C13BADD1A762CC900A38FFC /* ViewController.h */,
+				9C13BADE1A762CC900A38FFC /* ViewController.m */,
+				9C13BADF1A762CC900A38FFC /* ViewController.xib */,
 				9C13BAA81A76246D00A38FFC /* Images.xcassets */,
 				9C13BAAA1A76246D00A38FFC /* LaunchScreen.xib */,
-				9C13BA9B1A76246B00A38FFC /* Supporting Files */,
 			);
 			path = TicTacToe;
 			sourceTree = "<group>";
@@ -96,6 +126,7 @@
 		9C13BA9B1A76246B00A38FFC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9C13BACC1A7625C100A38FFC /* images */,
 				9C13BA9C1A76246B00A38FFC /* Info.plist */,
 				9C13BA9D1A76246B00A38FFC /* main.m */,
 			);
@@ -119,6 +150,29 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		9C13BACC1A7625C100A38FFC /* images */ = {
+			isa = PBXGroup;
+			children = (
+				9C13BACA1A7625BB00A38FFC /* icon.png */,
+				9C13BAC81A7625A400A38FFC /* wood_button.png */,
+				9C13BAC61A76258F00A38FFC /* board.png */,
+				9C13BAC41A76257000A38FFC /* X.png */,
+				9C13BAC21A76255900A38FFC /* O.png */,
+			);
+			name = images;
+			sourceTree = "<group>";
+		};
+		9C13BAD31A76265200A38FFC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9C13BAE51A763CF300A38FFC /* MultipeerConnectivity.framework */,
+				9C13BAD11A76264E00A38FFC /* Foundation.framework */,
+				9C13BACF1A76264900A38FFC /* UIKit.framework */,
+				9C13BACD1A76264200A38FFC /* GameKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -129,6 +183,7 @@
 				9C13BA941A76246B00A38FFC /* Sources */,
 				9C13BA951A76246B00A38FFC /* Frameworks */,
 				9C13BA961A76246B00A38FFC /* Resources */,
+				9C13BAC11A7624A000A38FFC /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -199,9 +254,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9C13BAA71A76246D00A38FFC /* Main.storyboard in Resources */,
+				9C13BAC51A76257000A38FFC /* X.png in Resources */,
+				9C13BAC91A7625A400A38FFC /* wood_button.png in Resources */,
+				9C13BAE11A762CC900A38FFC /* ViewController.xib in Resources */,
+				9C13BAC71A76258F00A38FFC /* board.png in Resources */,
+				9C13BACB1A7625BB00A38FFC /* icon.png in Resources */,
 				9C13BAAC1A76246D00A38FFC /* LaunchScreen.xib in Resources */,
 				9C13BAA91A76246D00A38FFC /* Images.xcassets in Resources */,
+				9C13BAC31A76255900A38FFC /* O.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,14 +274,31 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		9C13BAC11A7624A000A38FFC /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export CODESIGN_ALLOCATE=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/codesign_allocate\nif [ \"${PLATFORM_NAME}\" == \"iphoneos\" ] || [ \"${PLATFORM_NAME}\" == \"ipados\" ]; then\n/Applications/Xcode.app/Contents/Developer/iphoneentitlements/gen_entitlements.py \"my.company.${PROJECT_NAME}\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${PROJECT_NAME}.xcent\";\ncodesign -f -s \"iPhone Developer\" --entitlements \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${PROJECT_NAME}.xcent\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/\"\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		9C13BA941A76246B00A38FFC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9C13BAA41A76246C00A38FFC /* ViewController.m in Sources */,
+				9C13BAE01A762CC900A38FFC /* ViewController.m in Sources */,
 				9C13BAA11A76246C00A38FFC /* AppDelegate.m in Sources */,
 				9C13BA9E1A76246B00A38FFC /* main.m in Sources */,
+				9C13BAE41A76319F00A38FFC /* Packet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,14 +321,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		9C13BAA51A76246D00A38FFC /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9C13BAA61A76246D00A38FFC /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		9C13BAAA1A76246D00A38FFC /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -280,7 +349,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -297,7 +366,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -321,7 +390,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -332,7 +401,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -412,6 +481,7 @@
 				9C13BABD1A76246E00A38FFC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9C13BABE1A76246E00A38FFC /* Build configuration list for PBXNativeTarget "TicTacToeTests" */ = {
 			isa = XCConfigurationList;
@@ -420,6 +490,7 @@
 				9C13BAC01A76246E00A38FFC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
