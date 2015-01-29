@@ -24,6 +24,7 @@
 		9C13BAE11A762CC900A38FFC /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C13BADF1A762CC900A38FFC /* ViewController.xib */; };
 		9C13BAE41A76319F00A38FFC /* Packet.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C13BAE31A76319F00A38FFC /* Packet.m */; };
 		9C13BAE61A763CF300A38FFC /* MultipeerConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C13BAE51A763CF300A38FFC /* MultipeerConnectivity.framework */; };
+		9CDAE0151A78C884004CFD11 /* AlertBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDAE0141A78C884004CFD11 /* AlertBlock.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,8 @@
 		9C13BAE21A76319F00A38FFC /* Packet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Packet.h; sourceTree = "<group>"; };
 		9C13BAE31A76319F00A38FFC /* Packet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Packet.m; sourceTree = "<group>"; };
 		9C13BAE51A763CF300A38FFC /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = SDKROOT; };
+		9CDAE0131A78C884004CFD11 /* AlertBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertBlock.h; sourceTree = "<group>"; };
+		9CDAE0141A78C884004CFD11 /* AlertBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertBlock.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +114,8 @@
 				9C13BAD41A76271600A38FFC /* TicTacToe.h */,
 				9C13BAE21A76319F00A38FFC /* Packet.h */,
 				9C13BAE31A76319F00A38FFC /* Packet.m */,
+				9CDAE0131A78C884004CFD11 /* AlertBlock.h */,
+				9CDAE0141A78C884004CFD11 /* AlertBlock.m */,
 				9C13BA9B1A76246B00A38FFC /* Supporting Files */,
 				9C13BA9F1A76246C00A38FFC /* AppDelegate.h */,
 				9C13BAA01A76246C00A38FFC /* AppDelegate.m */,
@@ -299,6 +304,7 @@
 				9C13BAA11A76246C00A38FFC /* AppDelegate.m in Sources */,
 				9C13BA9E1A76246B00A38FFC /* main.m in Sources */,
 				9C13BAE41A76319F00A38FFC /* Packet.m in Sources */,
+				9CDAE0151A78C884004CFD11 /* AlertBlock.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -349,6 +355,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -369,6 +376,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -390,6 +398,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -403,6 +412,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -415,6 +425,7 @@
 				INFOPLIST_FILE = TicTacToe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -425,6 +436,7 @@
 				INFOPLIST_FILE = TicTacToe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

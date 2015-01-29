@@ -16,12 +16,12 @@
 #define kDiceNotRolled INT_MAX
 
 typedef enum GameStates {
-    kGameSteteBeginning,
-    kGameSteteRollingDice,
-    kGameSteteMyTurn,
-    kGameSteteYourTurn,
-    kGameSteteInterrupted,
-    kGameSteteDone,
+    kGameStateBeginning,
+    kGameStateRollingDice,
+    kGameStateMyTurn,
+    kGameStateYourTurn,
+    kGameStateInterrupted,
+    kGameStateDone,
 } GameState;
 
 typedef enum BoardSpaces {

@@ -8,18 +8,12 @@
 
 #import "ViewController.h"
 #import "Packet.h"
-typedef void (^ActionSheetBlock)(UIActionSheet *actionSheet, NSInteger buttonIndex);
+#import "AlertBlock.h"
 
 @interface ViewController ()
 
 @property (strong, nonatomic)MCNearbyServiceAdvertiser *advertiser;
 @property (strong, nonatomic)MCBrowserViewController *browserViewController;
-
-@end
-
-@interface UIActionSheet ()
-
-- (void)actionSheetWithTitle:(NSString *)title cancelButtonTitle:(NSString *)cancelTitle destructiveButtonTitle:(NSString *)destructiveTitle otherButtonTitles:(NSString *)otherTitles block:(ActionSheetBlock)block;
 
 @end
 
@@ -30,11 +24,21 @@ typedef void (^ActionSheetBlock)(UIActionSheet *actionSheet, NSInteger buttonInd
     self.oPieceImage = [UIImage imageNamed:@"O.png"];
     self.xPieceImage = [UIImage imageNamed:@"X.png"];
     
-    _peerID = [[MCPeerID alloc] initWithDisplayName:[[UIDevice currentDevice] name]];
-    _session = [[MCSession alloc] initWithPeer:_peerID];
+    if (!_peerID) {
+        _peerID = [[MCPeerID alloc] initWithDisplayName:[[UIDevice currentDevice] name]];
+    }
+    if (!_session) {
+        _session = [[MCSession alloc] initWithPeer:_peerID];
+    }
     _session.delegate = self;
     
     [super viewDidLoad];
+}
+
+- (void)didReceiveMemoryWarning {
+    _session.isAccessibilityElement = NO;
+    [_session disconnect];
+    _session.delegate = nil;
 }
 
 #pragma mark - Game-Specific Actions
@@ -44,15 +48,11 @@ typedef void (^ActionSheetBlock)(UIActionSheet *actionSheet, NSInteger buttonInd
     _dieRollAcknowledged = NO;
     
     _gameButton.hidden = YES;
-    //Afer ios7
-    NSLog(@"%@, %@, %@", _peerID, _session, kTicTacToeServieceType);
-
+    
     _advertiser = [[MCNearbyServiceAdvertiser alloc] initWithPeer:_peerID discoveryInfo:nil serviceType:kTicTacToeServieceType];
     _advertiser.delegate = self;
     [_advertiser startAdvertisingPeer];
     
-//    MCNearbyServiceBrowser *browser = [[MCNearbyServiceBrowser alloc] initWithPeer:_peerID serviceType:kTicTacToeServieceType];
-//    browser.delegate = self;
     _browserViewController = [[MCBrowserViewController alloc] initWithServiceType:kTicTacToeServieceType session:_session];
     _browserViewController.delegate = self;
     [self presentViewController:_browserViewController animated:YES completion:nil];
@@ -60,10 +60,10 @@ typedef void (^ActionSheetBlock)(UIActionSheet *actionSheet, NSInteger buttonInd
 
 - (IBAction)gameSpacePressed:(id)sender {
     UIButton *buttonPressed = sender;
-    if (_state == kGameSteteMyTurn && [buttonPressed imageForState:UIControlStateNormal] == nil) {
+    if (_state == kGameStateMyTurn && [buttonPressed imageForState:UIControlStateNormal] == nil) {
         [buttonPressed setImage:((_playerPiece == kPlayerPieceO) ? self.oPieceImage : self.xPieceImage) forState:UIControlStateNormal];
         _feedbackLabel.text = NSLocalizedString(@"Opponent's Turn", @"Opponent's Turn");
-        _state = kGameSteteYourTurn;
+        _state = kGameStateYourTurn;
         
         Packet *packet = [[Packet alloc] initMovePacketWithSpace:(BoardSpace)buttonPressed.tag];
         [self sendPacket:packet];
@@ -84,45 +84,39 @@ typedef void (^ActionSheetBlock)(UIActionSheet *actionSheet, NSInteger buttonInd
 }
 
 - (void)browserViewControllerDidFinish:(MCBrowserViewController *)browserViewController {
-    [browserViewController dismissViewControllerAnimated:YES completion:nil];
+    [_browserViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)browserViewControllerWasCancelled:(MCBrowserViewController *)browserViewController {
-    
+    [_browserViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - MCNearbyServiceAdvertiserDelegate
 
 - (void)advertiser:(MCNearbyServiceAdvertiser *)advertiser didReceiveInvitationFromPeer:(MCPeerID *)peerID withContext:(NSData *)context invitationHandler:(void (^)(BOOL, MCSession *))invitationHandler {
     
+    AlertBlock *alert = [[AlertBlock alloc]
+                          initWithTitle:@"Received Invitation"
+                          message:[NSString stringWithFormat:@"Received Invitation from %@", peerID.displayName]
+                          delegate:self
+                          cancelButtonTitle:@"No"
+                          otherButtonTitles:@"Accept"
+                          block:^(NSInteger buttonIndex) {
+                              BOOL acceptedInvitation;
 
-    
-    BOOL acceptedInvitation = YES;
-    invitationHandler(acceptedInvitation, (acceptedInvitation ? _session: nil));
-    
-
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] init];
-    [actionSheet actionSheetWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Received Invitation from %@", @"Received Invitation from {Peer}"), peerID.displayName]
-                       cancelButtonTitle:NSLocalizedString(@"Reject", nil)
-                  destructiveButtonTitle:nil
-                       otherButtonTitles:NSLocalizedString(@"Accept", nil)
-                                   block:^(UIActionSheet *actionSheet, NSInteger buttonIndex)
-      {
-          if (buttonIndex == [actionSheet cancelButtonIndex]) {
-              self.gameButton.hidden = NO;
-          }
-          BOOL acceptedInvitation = (buttonIndex == [actionSheet firstOtherButtonIndex]);
-          
-          _session = [[MCSession alloc] initWithPeer:_peerID
-                                              securityIdentity:nil
-                                          encryptionPreference:MCEncryptionNone];
-          _session.delegate = self;
-          
-          invitationHandler(acceptedInvitation, (acceptedInvitation ? _session : nil));
-          UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"hello" message:@"helloworld" delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
-          [alert show];
-          [self startNewGame];
-      }];
+                              if (buttonIndex == 0) {
+                                  [_advertiser stopAdvertisingPeer];
+                                  _advertiser = nil;
+                                  acceptedInvitation = NO;
+                              }
+                              else if (buttonIndex == 1){
+                                  acceptedInvitation = YES;
+                                  [_session.connectedPeers arrayByAddingObject:peerID];
+                              }
+                              
+                              invitationHandler(acceptedInvitation, (acceptedInvitation ? _session : nil));
+                          }];
+    [alert show];
 }
 
 #pragma mark - MCSessionDelegate
@@ -131,6 +125,7 @@ typedef void (^ActionSheetBlock)(UIActionSheet *actionSheet, NSInteger buttonInd
     switch (state) {
         case MCSessionStateConnected:
             NSLog(@"Connect successful.");
+            [self startNewGame];
             [_browserViewController dismissViewControllerAnimated:YES completion:nil];
             break;
         case MCSessionStateConnecting:
@@ -142,13 +137,14 @@ typedef void (^ActionSheetBlock)(UIActionSheet *actionSheet, NSInteger buttonInd
     }
     
     if (state == MCSessionStateNotConnected) {
-        _state = kGameSteteInterrupted;
+        _state = kGameStateInterrupted;
         UIAlertView *alert = [[UIAlertView alloc]
                               initWithTitle:NSLocalizedString(@"Peer Disconnected", @"Peer Disconnected")
                               message:NSLocalizedString(@"Connection lost", @"Connection lost")
                               delegate:self
                               cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel")
                               otherButtonTitles:nil, nil];
+        alert.tag = 1;
         [alert show];
         [session disconnect];
         session.delegate = nil;
@@ -158,11 +154,11 @@ typedef void (^ActionSheetBlock)(UIActionSheet *actionSheet, NSInteger buttonInd
 
 - (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID {
     NSKeyedUnarchiver *unachiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-    Packet *packert = [unachiver decodeObjectForKey:kTicTacToeArchiveKey];
+    Packet *packet = [unachiver decodeObjectForKey:kTicTacToeArchiveKey];
     
-    switch (packert.type) {
+    switch (packet.type) {
         case kPacketTypeDieRoll: {
-            _opponentDieRoll = packert.dieRoll;
+            _opponentDieRoll = packet.dieRoll;
             Packet *ack = [[Packet alloc] initAckPacketWithDieRoll:_opponentDieRoll];
             [self sendPacket:ack];
             _dieRollRecieved = YES;
@@ -170,25 +166,30 @@ typedef void (^ActionSheetBlock)(UIActionSheet *actionSheet, NSInteger buttonInd
         }
     
         case kPacketTypeAck: {
-            if (packert.dieRoll != _myDieRoll) {
-                NSLog(@"Ack packet doesn't match yourDieRoll (mine: %d, send: %d", (int)packert.dieRoll, (int)_myDieRoll);
+            if (packet.dieRoll != _myDieRoll) {
+                NSLog(@"Ack packet doesn't match yourDieRoll (mine: %d, send: %d", (int)packet.dieRoll, (int)_myDieRoll);
             }
             _dieRollAcknowledged = YES;
             break;
         }
             
         case kPacketTypeMove: {
-            UIButton *aButton = (UIButton *)[self.view viewWithTag:[packert space]];
-            [aButton setImage:((_playerPiece == kPlayerPieceO) ? self.xPieceImage : self.oPieceImage)
-                     forState:UIControlStateNormal];
-            _state = kGameSteteMyTurn;
-            _feedbackLabel.text = NSLocalizedString(@"Your Turn", @"Your Turn");
-            [self checkForGameEnd];
+            UIButton *aButton = (UIButton *)[self.view viewWithTag:packet.space];
+            _state = kGameStateMyTurn;
+            
+            if (aButton != nil) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    self.feedbackLabel.text = NSLocalizedString(@"Your Turn", @"Your Turn");
+                    [aButton setImage:((_playerPiece == kPlayerPieceO) ? self.xPieceImage : self.oPieceImage)
+                             forState:UIControlStateNormal];
+                    [self checkForGameEnd];
+                });
+            }
             break;
         }
             
         case kPacketTypeReset: {
-            if (_state == kGameSteteDone) {
+            if (_state == kGameStateDone) {
                 [self resetDieState];
             }
             break;
@@ -221,8 +222,188 @@ typedef void (^ActionSheetBlock)(UIActionSheet *actionSheet, NSInteger buttonInd
 #pragma mark - UIAlertView Delegate Method
 
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if (alertView.tag == 1) {
+        [self resetBoard];
+        self.gameButton.hidden = NO;
+    }
+    
+}
+
+#pragma mark - Game Methods
+
+- (void)startNewGame {
     [self resetBoard];
-    self.gameButton.hidden = NO;
+    [self sendDieRoll];
+}
+
+- (void)resetBoard {
+    for (int i = kUpperLeft; i <= kLowerRight; i++) {
+        UIButton *aButton = (UIButton *)[self.view viewWithTag:i];
+        [aButton setImage:nil forState:UIControlStateNormal];
+    }
+    
+    self.feedbackLabel.text = @"";
+    Packet *packet = [[Packet alloc] initResetPacket];
+    [self sendPacket:packet];
+    _playerPiece = kPlayerPieceUndecided;
+}
+
+- (void)resetDieState {
+    _dieRollRecieved = NO;
+    _dieRollAcknowledged = NO;
+    _myDieRoll = kDiceNotRolled;
+    _opponentDieRoll = kDiceNotRolled;
+}
+
+- (void)startGame {
+    if (_myDieRoll == _opponentDieRoll) {
+        _myDieRoll = kDiceNotRolled;
+        [self sendDieRoll];
+        _playerPiece = kPlayerPieceUndecided;
+    }
+    else if (_myDieRoll < _opponentDieRoll) {
+        _state = kGameStateYourTurn;
+        _playerPiece = kPlayerPieceX;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.feedbackLabel.text = NSLocalizedString(@"Opponent's Turn", @"Opponent's Turn");
+        });
+        [self.view setNeedsDisplay];
+    }
+    else {
+        _state = kGameStateMyTurn;
+        _playerPiece = kPlayerPieceO;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.feedbackLabel.text = NSLocalizedString(@"Your Turn", @"Your Turn");
+        });
+        [self.view setNeedsDisplay];
+    }
+    [self resetDieState];
+}
+
+- (void)sendDieRoll {
+    Packet *rollPacket;
+    _state = kGameStateRollingDice;
+    if (_myDieRoll == kDiceNotRolled) {
+        rollPacket = [[Packet alloc] initDieRollPacket];
+        _myDieRoll = rollPacket.dieRoll;
+    }
+    else {
+        rollPacket = [[Packet alloc] initDieRollPacketWithRoll:_myDieRoll];
+    }
+    [self sendPacket:rollPacket];
+}
+
+- (void)sendPacket:(Packet *)packet {
+    NSMutableData *data = [[NSMutableData alloc] init];
+    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+    [archiver encodeObject:packet forKey:kTicTacToeArchiveKey];
+    [archiver finishEncoding];
+    NSError *error = nil;
+    NSArray *peers =  [_session connectedPeers];
+    if (![_session sendData:data toPeers:peers withMode:MCSessionSendDataReliable error:&error]) {
+        NSLog(@"Error sending data: %@", [error localizedDescription]);
+    }
+}
+
+- (void)checkForGameEnd {
+    NSInteger moves = 0;
+    
+    UIImage *currentButtonImages[9];
+    UIImage *winningImage = nil;
+    
+    for (int i = kUpperLeft; i <= kLowerRight; i++) {
+        UIButton *oneButton = (UIButton *)[self.view viewWithTag:i];
+        if ([oneButton imageForState:UIControlStateNormal]) {
+            moves++;
+        }
+        currentButtonImages[i - kUpperLeft] = [oneButton imageForState:UIControlStateNormal];
+    }
+    
+    //Top Row
+    if (currentButtonImages[0] == currentButtonImages[1]
+        && currentButtonImages[0] == currentButtonImages[2]
+        && currentButtonImages[0] != nil) {
+        winningImage = currentButtonImages[0];
+    }
+    
+    //Middle Row
+    else if (currentButtonImages[3] == currentButtonImages[4]
+        && currentButtonImages[3] == currentButtonImages[5]
+        && currentButtonImages[3] != nil) {
+        winningImage = currentButtonImages[3];
+    }
+    
+    //Bottom Row
+    else if (currentButtonImages[6] == currentButtonImages[7]
+        && currentButtonImages[6] == currentButtonImages[8]
+        && currentButtonImages[6] != nil) {
+        winningImage = currentButtonImages[6];
+    }
+    
+    //Top Colum
+    else if (currentButtonImages[0] == currentButtonImages[3]
+        && currentButtonImages[0] == currentButtonImages[6]
+        && currentButtonImages[0] != nil) {
+        winningImage = currentButtonImages[0];
+    }
+    
+    //Middle Colum
+    else if (currentButtonImages[1] == currentButtonImages[4]
+             && currentButtonImages[1] == currentButtonImages[7]
+             && currentButtonImages[1] != nil) {
+        winningImage = currentButtonImages[1];
+    }
+    
+    //Bottom Colum
+    else if (currentButtonImages[2] == currentButtonImages[5]
+             && currentButtonImages[2] == currentButtonImages[8]
+             && currentButtonImages[2] != nil) {
+        winningImage = currentButtonImages[2];
+    }
+    
+    //Diagonal starting top left
+    else if (currentButtonImages[0] == currentButtonImages[4]
+             && currentButtonImages[0] == currentButtonImages[8]
+             && currentButtonImages[0] != nil) {
+        winningImage = currentButtonImages[0];
+    }
+    
+    //Diagonal starting top right
+    else if (currentButtonImages[2] == currentButtonImages[4]
+             && currentButtonImages[2] == currentButtonImages[6]
+             && currentButtonImages[2] != nil) {
+        winningImage = currentButtonImages[2];
+    }
+    
+    if (winningImage == self.xPieceImage) {
+        if (_playerPiece == kPlayerPieceX) {
+            self.feedbackLabel.text = NSLocalizedString(@"You win", @"You win");
+        }
+        else {
+            self.feedbackLabel.text = NSLocalizedString(@"Opponent win", @"Opponent win");
+        }
+        _state = kGameStateDone;
+    }
+    else if (winningImage == self.oPieceImage) {
+        if (_playerPiece == kPlayerPieceO) {
+            self.feedbackLabel.text = NSLocalizedString(@"You win", @"You win");
+        }
+        else {
+            self.feedbackLabel.text = NSLocalizedString(@"Opponent win", @"Opponent win");
+        }
+        _state = kGameStateDone;
+    }
+    else {
+        if (moves >= 9) {
+            self.feedbackLabel.text = NSLocalizedString(@"^_^", @"^_^");
+            _state = kGameStateDone;
+        }
+    }
+    
+    if (_state == kGameStateDone) {
+        [self performSelector:@selector(startNewGame) withObject:nil afterDelay:3.0];
+    }
+
 }
 
 @end
